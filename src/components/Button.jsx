@@ -1,18 +1,19 @@
 import { Link } from 'react-router-dom'
 
 const base =
-  'inline-flex items-center justify-center gap-2 rounded-full font-medium transition ' +
+  'inline-flex items-center justify-center gap-2 rounded-full font-medium transition duration-200 ease-out ' +
+  'motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 ' +
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 ' +
   'focus-visible:ring-offset-sand-100 disabled:opacity-60 disabled:pointer-events-none'
 
 const variants = {
   primary:
-    'bg-sage-600 text-sand-50 shadow-sm hover:bg-sage-700 active:bg-sage-900',
+    'bg-sage-600 text-sand-50 shadow-sm hover:bg-sage-700 hover:shadow-md active:bg-sage-900',
   // Soft, quiet, devotional — a calm muted sage rather than a salesy accent.
   soft:
-    'bg-sage-500 text-sand-50 shadow-sm hover:bg-sage-600 active:bg-sage-700',
+    'bg-sage-500 text-sand-50 shadow-sm hover:bg-sage-600 hover:shadow-md active:bg-sage-700',
   gold:
-    'bg-gold-400 text-sage-900 shadow-grace hover:bg-gold-300 active:bg-gold-500',
+    'bg-gold-400 text-sage-900 shadow-grace hover:bg-gold-300 hover:shadow-md active:bg-gold-500',
   secondary:
     'bg-sand-50 text-sage-900 ring-1 ring-sage-300 hover:bg-sage-50',
   ghost: 'text-sage-700 hover:text-sage-900 hover:bg-sage-50',

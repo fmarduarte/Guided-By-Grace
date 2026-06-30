@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { BookOpen, HandHeart, Footprints } from 'lucide-react'
 import Button from '../components/Button'
+import EmailCapture from '../components/EmailCapture'
+import Reveal from '../components/Reveal'
 import { journey, totalDays } from '../data/journey'
 
 export default function Landing() {
@@ -10,7 +12,7 @@ export default function Landing() {
       <TodaysReflection />
       <WhyChoose />
       <Timeline />
-      <EmailCapture />
+      <Newsletter />
       <FinalCTA />
     </>
   )
@@ -20,9 +22,9 @@ export default function Landing() {
 function Hero() {
   return (
     <section className="relative isolate flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-[#faf8f3] via-[#f0ebe0] to-[#dfe8e0] px-5 py-20 sm:py-0">
-      {/* Blur circles decorative */}
-      <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-gradient-to-br from-[rgba(201,168,106,0.15)] to-transparent blur-3xl" />
-      <div className="absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-gradient-to-tr from-[rgba(93,122,87,0.1)] to-transparent blur-3xl" />
+      {/* Blur circles decorative — drift very slowly to feel alive but still */}
+      <div className="animate-drift-a absolute -right-40 -top-40 h-96 w-96 rounded-full bg-gradient-to-br from-[rgba(201,168,106,0.15)] to-transparent blur-3xl" />
+      <div className="animate-drift-b absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-gradient-to-tr from-[rgba(93,122,87,0.1)] to-transparent blur-3xl" />
 
       {/* Content */}
       <div className="relative z-10 max-w-2xl text-center">
@@ -44,9 +46,12 @@ function Hero() {
           >
             Start Free Today
           </Button>
-          <button className="inline-flex items-center justify-center rounded-full border-2 border-[#dfe8e0] bg-white/80 px-10 py-4 text-base font-medium text-[#2a3a2e] transition-all duration-300 hover:bg-white hover:border-[#5d7a57]">
+          <a
+            href="#journey"
+            className="inline-flex items-center justify-center rounded-full border-2 border-[#dfe8e0] bg-white/80 px-10 py-4 text-base font-medium text-[#2a3a2e] transition-all duration-300 hover:bg-white hover:border-[#5d7a57]"
+          >
             Learn More
-          </button>
+          </a>
         </div>
 
         {/* Tagline */}
@@ -81,7 +86,7 @@ function TodaysReflection() {
   return (
     <section className="bg-[#faf8f3] px-5 py-20 sm:py-24">
       <div className="mx-auto max-w-2xl">
-        <div className="relative overflow-hidden rounded-3xl border border-[rgba(201,168,106,0.1)] bg-white p-10 shadow-lg sm:p-16">
+        <div className="group relative overflow-hidden rounded-3xl border border-[rgba(201,168,106,0.1)] bg-white p-10 shadow-lg transition duration-300 ease-out motion-safe:hover:-translate-y-1 hover:shadow-xl sm:p-16">
           {/* Decorative blur circle */}
           <div className="absolute -right-24 -top-32 h-80 w-80 rounded-full bg-gradient-to-br from-[rgba(201,168,106,0.08)] to-transparent blur-3xl" />
 
@@ -104,9 +109,15 @@ function TodaysReflection() {
               <p className="text-xs uppercase tracking-widest text-[#8a9a8c]">Today&apos;s Title</p>
               <p className="mt-3 font-serif text-xl font-normal text-[#2a3a2e]">{day.title}</p>
 
-              <button className="mt-6 text-sm font-medium text-[#5d7a57] transition-colors duration-300 hover:text-[#4a6347]">
-                Read today&apos;s reflection →
-              </button>
+              <Link
+                to={`/walk/day/${day.day}`}
+                className="mt-6 inline-flex items-center gap-1 text-sm font-medium text-[#5d7a57] transition-colors duration-200 hover:text-[#4a6347]"
+              >
+                Read today&apos;s reflection
+                <span className="inline-block transition-transform duration-200 ease-out motion-safe:group-hover:translate-x-0.5">
+                  →
+                </span>
+              </Link>
             </div>
           </div>
         </div>
@@ -143,11 +154,12 @@ function WhyChoose() {
         </h2>
 
         <div className="mt-16 grid gap-8 sm:grid-cols-3">
-          {features.map((feature) => {
+          {features.map((feature, idx) => {
             const Icon = feature.icon
             return (
-              <div
+              <Reveal
                 key={feature.title}
+                delay={idx * 120}
                 className="group rounded-2xl border border-[rgba(201,168,106,0.2)] bg-white/60 p-8 backdrop-blur-sm transition-all duration-300 hover:bg-white hover:shadow-lg sm:p-10"
               >
                 <Icon
@@ -162,7 +174,7 @@ function WhyChoose() {
                 <p className="mt-3 text-sm leading-relaxed text-[#8a9a8c]">
                   {feature.description}
                 </p>
-              </div>
+              </Reveal>
             )
           })}
         </div>
@@ -174,7 +186,7 @@ function WhyChoose() {
 /* ========================================================= TIMELINE ======= */
 function Timeline() {
   return (
-    <section className="bg-[#faf8f3] px-5 py-20 sm:py-24">
+    <section id="journey" className="scroll-mt-20 bg-[#faf8f3] px-5 py-20 sm:py-24">
       <div className="mx-auto max-w-3xl">
         <div className="text-center">
           <h2 className="font-serif text-3xl font-normal text-[#2a3a2e] sm:text-4xl">
@@ -192,8 +204,9 @@ function Timeline() {
 
           {/* Timeline items */}
           {journey.days.map((day, idx) => (
-            <div
+            <Reveal
               key={day.day}
+              delay={idx * 70}
               className={`flex gap-6 sm:gap-0 ${
                 idx % 2 === 0
                   ? 'sm:flex-row sm:pr-[calc(50%+24px)]'
@@ -217,7 +230,7 @@ function Timeline() {
                   {day.title}
                 </p>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
 
@@ -240,75 +253,13 @@ function Timeline() {
   )
 }
 
-/* ====================================================== EMAIL CAPTURE ======= */
-function EmailCapture() {
-  const [email, setEmail] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
-
-  // Success confirmation fades away after 3 seconds.
-  useEffect(() => {
-    if (!success) return
-    const t = setTimeout(() => setSuccess(false), 3000)
-    return () => clearTimeout(t)
-  }, [success])
-
-  function handleSubmit(e) {
-    e.preventDefault()
-    if (loading) return
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return
-
-    setLoading(true)
-    // No backend yet — persist locally so the address isn't lost.
-    try {
-      localStorage.setItem('newsletter_email', email)
-    } catch {
-      /* storage unavailable (e.g. private mode) — fail silently */
-    }
-    setTimeout(() => {
-      setLoading(false)
-      setSuccess(true)
-      setEmail('')
-    }, 500)
-  }
-
+/* ======================================================== NEWSLETTER ======= */
+function Newsletter() {
   return (
     <section className="bg-[#faf8f3] px-5 py-20">
       <div className="mx-auto max-w-[600px] text-center">
-        <h2 className="font-serif text-3xl font-normal text-[#2a3a2e]">Stay Connected</h2>
-        <p className="mt-3 text-sm text-[#8a9a8c]">
-          New reflections and guided prayers delivered to your inbox.
-        </p>
-
-        <form onSubmit={handleSubmit} noValidate className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <label htmlFor="newsletter-email" className="sr-only">
-            Your email address
-          </label>
-          <input
-            id="newsletter-email"
-            type="email"
-            inputMode="email"
-            autoComplete="email"
-            required
-            placeholder="Your email address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="flex-1 rounded-2xl border border-[rgba(201,168,106,0.2)] bg-white px-5 py-3 text-[#2a3a2e] placeholder:text-[#8a9a8c] focus:outline-none focus:ring-2 focus:ring-[#c9a86a]"
-          />
-          <button
-            type="submit"
-            disabled={loading}
-            className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#5d7a57] to-[#4a6347] px-8 py-3 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg disabled:opacity-70"
-          >
-            {loading ? 'Sending…' : 'Send Me Reflections'}
-          </button>
-        </form>
-
-        <p className="mt-4 h-5 text-sm font-medium text-[#5d7a57]" role="status" aria-live="polite">
-          {success ? 'Check your email to confirm!' : ''}
-        </p>
-
-        <p className="mt-2 text-xs italic text-[#8a9a8c]">
+        <EmailCapture source="landing_footer" />
+        <p className="mt-4 text-xs italic text-[#8a9a8c]">
           We respect your privacy. Unsubscribe at any time.
         </p>
       </div>
@@ -328,9 +279,12 @@ function FinalCTA() {
           Five quiet minutes that could change your entire day.
         </p>
 
-        <button className="mt-8 inline-flex items-center justify-center rounded-full bg-white px-10 py-4 text-base font-semibold text-[#5d7a57] transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+        <Link
+          to="/walk"
+          className="mt-8 inline-flex items-center justify-center rounded-full bg-white px-10 py-4 text-base font-semibold text-[#5d7a57] transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+        >
           Start Your Journey
-        </button>
+        </Link>
       </div>
     </section>
   )

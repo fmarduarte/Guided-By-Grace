@@ -93,3 +93,70 @@ body {
     radial-gradient(80% 40% at 18% 8%, rgba(246, 250, 248, 0.6) 0%, rgba(251, 248, 241, 0) 64%),
     #fbf8f1;
 }
+
+/* ----------------------------------------------------------------------------
+   Contemplative motion system
+
+   The page should feel alive, but almost still. Movement is slow, opacity
+   shifts are tiny, and everything is disabled under prefers-reduced-motion.
+---------------------------------------------------------------------------- */
+
+/* 1. Hero ambient drift — barely-perceptible movement of the light overlays.
+   Two variants so layered glows breathe out of sync. */
+@keyframes drift-a {
+  0%   { transform: translate3d(0, 0, 0) scale(1);       opacity: 0.85; }
+  50%  { transform: translate3d(14px, 10px, 0) scale(1.04); opacity: 1; }
+  100% { transform: translate3d(0, 0, 0) scale(1);       opacity: 0.85; }
+}
+@keyframes drift-b {
+  0%   { transform: translate3d(0, 0, 0) scale(1);        opacity: 0.9; }
+  50%  { transform: translate3d(-12px, -8px, 0) scale(1.05); opacity: 1; }
+  100% { transform: translate3d(0, 0, 0) scale(1);        opacity: 0.9; }
+}
+.animate-drift-a {
+  animation: drift-a 11s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+.animate-drift-b {
+  animation: drift-b 9s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* 4 & 6. Scroll / first-render reveal — soft fade with a slight upward lift. */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 600ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 600ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.reveal-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* 5. Success state — a gentle fade-in (no celebration). */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: none; }
+}
+.animate-fade-in {
+  animation: fade-in 500ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+/* Accessibility — honour the user's reduced-motion preference everywhere. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-drift-a,
+  .animate-drift-b,
+  .animate-fade-in {
+    animation: none;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
