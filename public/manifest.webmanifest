@@ -1,0 +1,19 @@
+{
+  "name": "Guided by Grace",
+  "short_name": "Guided by Grace",
+  "description": "Spend 5 minutes with God every day. A calm, guided 7-day journey.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fbf8f1",
+  "theme_color": "#fbf8f1",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

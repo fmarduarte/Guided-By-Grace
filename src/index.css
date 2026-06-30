@@ -1,0 +1,94 @@
+@import 'tailwindcss';
+
+/* ----------------------------------------------------------------------------
+   Guided by Grace — design tokens
+   "Morning by the sea" — a calm, premium Christian identity: warm ivory,
+   deep slate text, soft sage, a muted gold accent, and a soft sea-blue that
+   appears only in the hero atmosphere.
+
+   Brand reference palette:
+     heroSky    #DDEEF2   softCloud  #F6FAF8   textPrimary #20333A
+     warmIvory  #FBF8F1   softSage   #DDE8D8   mutedGold   #C9A86A
+     cardWhite  #FFFFFF   border     #E7E1D5
+---------------------------------------------------------------------------- */
+@theme {
+  --font-serif: 'Fraunces', ui-serif, Georgia, serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  /* Warm neutrals — "sand" runs from pure-white cards to the ivory page. */
+  --color-sand-50: #ffffff; /* card */
+  --color-sand-100: #fbf8f1; /* page background (warm ivory) */
+  --color-sand-200: #e7e1d5; /* border / hairlines */
+  --color-sand-300: #ddd2bf; /* subtle fills, progress track */
+
+  /* Greens — soft sage tints up to a deep, calm slate. */
+  --color-sage-50: #f2f6ef;
+  --color-sage-100: #dde8d8; /* soft sage accent */
+  --color-sage-300: #bcd0b6;
+  --color-sage-500: #6f7c6b; /* secondary text green */
+  --color-sage-600: #4f6b52;
+  --color-sage-700: #3d5640;
+  --color-sage-900: #20333a; /* deep slate (primary text) */
+
+  /* Muted gold — used sparingly for the primary call to action. */
+  --color-gold-300: #ddc48c;
+  --color-gold-400: #c9a86a; /* accent */
+  --color-gold-500: #b8945a;
+
+  /* Hero "morning by the sea" atmosphere. */
+  --color-sky: #ddeef2; /* soft sea-blue */
+  --color-cloud: #f6faf8; /* soft cloud */
+
+  --color-ink: #20333a; /* deep slate (primary text) */
+  --color-ink-soft: #6f7c6b; /* muted sage-grey */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-sand-100);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* A soft, warm radial glow used behind hero sections — gentle and premium. */
+.bg-grace-glow {
+  background:
+    radial-gradient(58% 44% at 50% -6%, rgba(201, 168, 106, 0.14) 0%, rgba(251, 248, 241, 0) 72%),
+    radial-gradient(70% 55% at 84% 8%, rgba(221, 232, 216, 0.55) 0%, rgba(251, 248, 241, 0) 70%);
+}
+
+/* Soft, premium card shadow — barely-there lift on warm ivory. */
+.shadow-grace {
+  box-shadow:
+    0 1px 2px rgba(36, 50, 39, 0.04),
+    0 10px 30px -12px rgba(36, 50, 39, 0.12);
+}
+
+/* A deeper lift for the product card that floats over the hero sky. */
+.shadow-float {
+  box-shadow:
+    0 2px 6px rgba(32, 51, 58, 0.05),
+    0 30px 60px -28px rgba(32, 51, 58, 0.28);
+}
+
+/* ----------------------------------------------------------------------------
+   "Quiet morning with God" hero atmosphere.
+
+   Almost entirely warm ivory, lifted only by the faintest breath of dawn —
+   a barely-there blue and sage haze near the top that dissolves into the
+   page. No strong colour band, no literal sky. The background should be felt
+   more than seen. Used ONLY behind the hero.
+---------------------------------------------------------------------------- */
+.bg-hero-quiet {
+  background:
+    radial-gradient(72% 48% at 50% -12%, rgba(221, 238, 242, 0.55) 0%, rgba(251, 248, 241, 0) 62%),
+    radial-gradient(60% 42% at 82% 2%, rgba(221, 232, 216, 0.4) 0%, rgba(251, 248, 241, 0) 60%),
+    radial-gradient(80% 40% at 18% 8%, rgba(246, 250, 248, 0.6) 0%, rgba(251, 248, 241, 0) 64%),
+    #fbf8f1;
+}
